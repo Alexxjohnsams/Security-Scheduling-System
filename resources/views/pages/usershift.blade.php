@@ -8,7 +8,7 @@
             <div class="card-body row">
                 <div class="col mt-0">
                     <h1 class="mt-1 mb-3 h5"> Total shift </h1> 
-                    <h1 class="mt-1 mb-3 h3"> Your total completed shift is <strong> 28 </strong>  </h1> 
+                    <h1 class="mt-1 mb-3 h3"> Your total completed shift is <strong> {{$usershiftcout}} </strong>  </h1> 
                 </div>        
                 <div class="col mt-0">
                     <h1 class="mt-1 mb-3 h4"> </h1> 
@@ -22,18 +22,17 @@
             </div> 
             <div class="card-body table-borderless">                       
                 <table class="table table-striped ">
+                     
                     <tr>
                         <th>Date</th>
-                        <th>Scheduled Location</th>
+                        <th>Location</th>
                     </tr>
+                    @foreach ($shifts as $shift) 
                     <tr>
-                        <td>28th September, 2028</td>
-                        <td>Green Wood Vlley</td> 
+                        <td>{{$shift -> date}}</td>
+                        <td>{{$shift -> location}}</td> 
                     </tr>
-                    <tr>
-                        <td>17th Sept</td>
-                        <td>Green opay</td>
-                    </tr>
+                    @endforeach
                 </table>                        
             </div>                                   
         </div>

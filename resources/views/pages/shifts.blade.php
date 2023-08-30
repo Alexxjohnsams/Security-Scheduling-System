@@ -8,7 +8,7 @@
             <div class="card-body row">
                 <div class="col mt-0">
                     <h1 class="mt-1 mb-3 h5"> Today, </h1> 
-                    <h1 class="mt-1 mb-3 h3"> <strong> Tuesday, </strong> 28th Nov. 2023 </h1> 
+                    <h1 class="mt-1 mb-3 h3"> <strong> {{$day}}, </strong> {{$daydate}} </h1> 
                 </div>        
                 <div class="col mt-0">
                     <h1 class="mt-1 mb-3 h4"> </h1> 
@@ -36,9 +36,10 @@
                         <th>Scheduled Location</th>
                         <th></th>
                     </tr>
+                    @foreach($shifts as $shift)
                     <tr>
-                        <td>Alex Alexx</td>
-                        <td>Green Wood Vlley</td>                        
+                        <td>{{$shift -> officer_name}}</td>
+                        <td>{{$shift -> location}}</td>                        
                         <td>
                             <button class="btn btn-sm btn-outline-success">
                                 <i class="" data-feather="edit-2"></i>
@@ -47,19 +48,8 @@
                                 <i class="" data-feather="trash"></i>
                             </button>
                         </td>
-                    </tr>
-                    <tr>
-                        <td>Samson Johnson</td>
-                        <td>Garden Side</td>
-                        <td>
-                            <button class="btn btn-sm btn-outline-success">
-                                <i class="" data-feather="edit-2"></i>
-                            </button>
-                            <button class="btn btn-sm btn-outline-danger">
-                                <i class="" data-feather="trash"></i>
-                            </button>
-                        </td>
-                    </tr>
+                    </tr> 
+                    @endforeach                   
                 </table>                        
             </div>  
             <div class="card-header">

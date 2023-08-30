@@ -14,7 +14,7 @@
                                     <h5 class="card-title text-black">Total officers</h5>
                                 </div>
                             </div>
-                            <h1 class="mt-1 mb-3 display-6">10</h1>                            
+                            <h1 class="mt-1 mb-3 display-6">{{$officers}}</h1>                            
                         </div>
                     </div>
                     <div class="card col-sm-4 boxxx">
@@ -24,7 +24,7 @@
                                     <h5 class="card-title text-black">All Locations</h5>
                                 </div>
                             </div>
-                            <h1 class="mt-1 mb-3 display-6">4</h1>
+                            <h1 class="mt-1 mb-3 display-6">{{$locationscount}}</h1>
                         </div>
                     </div>
                     <div class="card col-sm-4 box-red">
@@ -34,7 +34,7 @@
                                     <h5 class="card-title text-black">Unapproved Officers</h5>
                                 </div>
                             </div>
-                            <h1 class="mt-1 mb-3 display-6">4</h1>
+                            <h1 class="mt-1 mb-3 display-6">{{$countusers}}</h1>
                         </div>
                     </div>
             </div>
@@ -43,7 +43,7 @@
 
     <div class="row">
         <div class="container">
-            <h1 class="h3 mb-3 pt-3"><strong>Newly Registered</strong> Officers</h1>
+            <h1 class="h3 mb-3 pt-3"><strong>Unapproved</strong> Officers</h1>
             <div class="row card">
                 <div class="col-12 table-responsive">
                     <table class="table table-borderless my-0">
@@ -54,7 +54,7 @@
                             <th></th>
                         </tr>
                         
-                        @foreach ($users as $user)
+                        @foreach ($newusers as $user)
                         <tr>
                             <td>{{$user -> name}}</td>
                             <td>{{$user -> email}}</td>

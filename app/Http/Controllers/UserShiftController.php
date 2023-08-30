@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\userShift;
 use Illuminate\Http\Request;
+use App\Models\User;
+use App\Models\Locations;
+use App\Models\shifts;
 
 class UserShiftController extends Controller
 {
@@ -12,7 +15,14 @@ class UserShiftController extends Controller
      */
     public function index()
     {
-        return view('pages.usershift');
+        $users = User::whereNotIn('role', ['admin'])->get();
+        $locations = Locations::all();
+
+        $userSh = auth()->user();
+        $userid = $userSh -> id;
+        $shifts = shifts::where('id', $userid)->get();
+        $usershiftcout = shifts::where('id', $userid)->count();
+        return view('pages.usershift', compact('users', 'locations', 'shifts', 'usershiftcout'));
     }
 
     /**

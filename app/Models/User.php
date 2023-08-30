@@ -17,6 +17,12 @@ class User extends Authenticatable
      *
      * @var array<int, string>
      */
+
+     public function isAdmin()
+    {
+        return $this->role === 'admin';
+    }
+
     protected $fillable = [
         'name',
         'email',
@@ -25,7 +31,7 @@ class User extends Authenticatable
         'password',
     ];
 
-    public function shifts()
+    public function users()
     {
         return $this->hasMany(shifts::class);
     }

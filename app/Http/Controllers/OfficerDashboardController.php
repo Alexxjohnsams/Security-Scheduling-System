@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\OfficerDashboard;
 use Illuminate\Http\Request;
+use App\Models\User;
+use App\Models\Locations;
 
 class OfficerDashboardController extends Controller
 {
@@ -12,7 +14,9 @@ class OfficerDashboardController extends Controller
      */
     public function index()
     {
-        return view('pages.dashboard');
+        $users = User::whereNotIn('role', ['admin'])->get();
+        $locations = Locations::all();
+        return view('pages.dashboard', compact('users', 'locations'));
     }
 
     /**

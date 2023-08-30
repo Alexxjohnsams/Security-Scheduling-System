@@ -41,5 +41,6 @@
             </div>
 
         <script src="js/app.js"></script>
+        @include('sweetalert::alert')
 </body>
 </html>

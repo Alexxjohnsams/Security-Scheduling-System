@@ -10,8 +10,8 @@
                         All available Locations
                     </div>
                     <div class="col text-end">
-                        <button class="btn btn-success">
-                            <i class="" data-feather="plus"></i>Add New
+                        <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#newlocation">
+                            <i class="" data-feather="plus"></i> Add New
                         </button>
                     </div>
                 </div>
@@ -22,34 +22,20 @@
                         <th>Name</th>
                         <th></th>
                     </tr>
-                    <tr>
-                        <td>Green Wood vally</td>                        
+                    @foreach ($locations as $location) 
+                    <tr>                        
+                        <td>{{$location -> location_name}}</td>                        
                         <td>
-                            <button class="btn btn-sm btn-outline-success">
-                                <i class="" data-feather="align-center"></i>
-                            </button>
-                            <button class="btn btn-sm btn-outline-success">
-                                <i class="" data-feather="feather"></i>
-                            </button>
-                            <button class="btn btn-sm btn-outline-danger">
-                                <i class="" data-feather="trash"></i>
-                            </button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Generator Room, south side</td>
-                        <td>
-                            <button class="btn btn-sm btn-outline-success">
-                                <i class="" data-feather="align-center"></i>
-                            </button>
                             <button class="btn btn-sm btn-outline-success">
                                 <i class="" data-feather="edit-2"></i>
                             </button>
                             <button class="btn btn-sm btn-outline-danger">
                                 <i class="" data-feather="trash"></i>
                             </button>
-                        </td>
+                        </td>                        
                     </tr>
+                    @endforeach
+                    
                 </table>                        
             </div>                                   
         </div>

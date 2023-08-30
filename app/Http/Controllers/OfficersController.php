@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Officers;
 use Illuminate\Http\Request;
+use App\Models\User;
+use App\Models\Locations;
 
 class OfficersController extends Controller
 {
@@ -12,7 +14,9 @@ class OfficersController extends Controller
      */
     public function index()
     {
-        return view('pages.officers');
+        $users = User::whereNotIn('role', ['admin'])->get();
+        $locations = Locations::all();
+        return view('pages.officers', compact('users', 'locations'));
     }
 
     /**

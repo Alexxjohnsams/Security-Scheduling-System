@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Locations;
 use Illuminate\Http\Request;
+use RealRashid\SweetAlert\Facades\Alert;
+use App\Models\User;
 
 class LocationsController extends Controller
 {
@@ -12,7 +14,9 @@ class LocationsController extends Controller
      */
     public function index()
     {
-        return view('pages.locations');
+        $users = User::whereNotIn('role', ['admin'])->get();
+        $locations = Locations::all();
+        return view('pages.locations', compact('users', 'locations'));
     }
 
     /**
@@ -28,7 +32,12 @@ class LocationsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        Locations::create([
+            'location_name' => $request -> location_name
+        ]);
+
+        Alert::success('Success', 'New Location Addedd Successfully!');
+        return redirect()->back();
     }
 
     /**
@@ -36,7 +45,7 @@ class LocationsController extends Controller
      */
     public function show(Locations $locations)
     {
-        //
+        
     }
 
     /**

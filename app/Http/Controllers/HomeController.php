@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use RealRashid\SweetAlert\Facades\Alert;
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
+use App\Models\Locations;
 
 class HomeController extends Controller
 {
@@ -26,7 +27,8 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $users = DB::table('users')
+        $users = User::whereNotIn('role', ['admin'])->get();
+        $newusers = DB::table('users')
             ->select('*')
             ->where('role', '=', 'user')
             ->orderBy('created_at', 'desc')

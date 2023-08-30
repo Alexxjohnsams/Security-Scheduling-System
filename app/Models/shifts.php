@@ -10,15 +10,13 @@ class shifts extends Model
     use HasFactory;
 
     protected $fillable = [
-        'staff_name',
-        'email',
-        'role',
-        'phone',
-        'password',
+        'officer_name',
+        'location',
+        'date',
     ];
 
-    public function staffcertificates()
+    public function shifts()
     {
-        return $this->hasMany(StaffCertificate::class);
+        return $this->belongsTo(users::class);
     }
 }
