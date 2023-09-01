@@ -13,18 +13,31 @@
                         <th>Officer Name</th>
                         <th>Phone</th>
                         <th>Email</th>
+                        <th>status</th>
                         <th></th>
                     </tr>
-                    @foreach ($users as $user)
+                    
+                    @foreach ($allusers as $user)
+                    
                     <tr>
                         <td>{{$user -> name}}</td>
                         <td>{{$user -> phone}}</td>
-                        <td>{{$user -> email}}</td>                         
+                        <td>{{$user -> email}}</td>
+                        <td>
+                            <?php
+                                $role = $user -> role;
+                                if ($role === 'user') {
+                                    echo "<span class='badge rounded-pill bg-warning text-dark'>Unpproved</span>";
+                                } else {
+                                    echo "<span class='badge rounded-pill bg-success'>approved</span>";
+                                }
+                            ?>
+                        </td>                          
                         <td>
                             <button class="btn btn-sm btn-outline-success">
                                 <i class="" data-feather="align-center"></i>
                             </button>
-                            <button class="btn btn-sm btn-outline-success">
+                            <button class="btn btn-sm btn-outline-success btnEditRole" data-id="{{$user -> id}}" data-bs-toggle="modal" data-bs-target="#rolemodal">
                                 <i class="" data-feather="edit-2"></i>
                             </button>
                             <button class="btn btn-sm btn-outline-danger">
@@ -38,5 +51,6 @@
         </div>
     </div>
 </div>
-    
+
+@include('pages.modal')
 @endsection

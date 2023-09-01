@@ -8,7 +8,7 @@
             <div class="card-body row">
                 <div class="col mt-0">
                     <h1 class="mt-1 mb-3 h5"> Your next shift </h1> 
-                    <h1 class="mt-1 mb-3 h3"> <strong> Tuesday, </strong> 28th Nov. 2023 </h1> 
+                    <h1 class="mt-1 mb-3 h3"> <strong> Tuesday, </strong> </h1> 
                 </div>        
                 <div class="col mt-0">
                     <h1 class="mt-1 mb-3 h4"> </h1> 

@@ -53,7 +53,7 @@
                 </table>                        
             </div>  
             <div class="card-header">
-                <button class="btn text-success">See all shifts <i class="text-success" data-feather="arrow-right"></i></button>
+                <a class="btn text-success" href="{{route("allshifts")}}">See all shifts <i class="text-success" data-feather="arrow-right"></i></a>
             </div>                                  
         </div>
     </div>

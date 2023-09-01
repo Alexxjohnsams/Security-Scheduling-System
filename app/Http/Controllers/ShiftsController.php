@@ -8,6 +8,9 @@ use App\Models\User;
 use App\Models\Locations;
 use RealRashid\SweetAlert\Facades\Alert;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use PhpParser\Node\Expr\AssignOp\ShiftLeft;
 
 class ShiftsController extends Controller
 {
@@ -16,7 +19,7 @@ class ShiftsController extends Controller
      */
     public function index()
     {
-        $users = User::whereNotIn('role', ['admin'])->get();
+        $users =  User::whereNotIn('role', ['admin'])->where('role', ['officer'])->get();
         $locations = Locations::all();
 
         $date = Carbon::today();
@@ -27,6 +30,15 @@ class ShiftsController extends Controller
 
         $shifts = shifts::where('date', $today)->get();
         return view('pages.shifts', compact('users', 'locations', 'shifts' , 'day', 'daydate'));
+    }
+
+    public function allindex()
+    {
+        $users =  User::whereNotIn('role', ['admin'])->where('role', ['officer'])->get();
+        $locations = Locations::all();
+        
+        $shifts = shifts::all();
+        return view('pages.allshifts', compact('users', 'locations', 'shifts'));
     }
 
     /**
@@ -42,19 +54,67 @@ class ShiftsController extends Controller
      */
     public function store(Request $request)
     {
+        $inputDate = Carbon::parse($request->date); 
+        $nowdate = Carbon::now();
+
+        $date = $inputDate->setTime(0, 0, 0);
+        $todays = $nowdate->setTime(0, 0, 0);
+
+        $storedate = $inputDate->format('l, jS F, Y');
+
+        $existingShift = Shifts::where('location', $request->location)
+                            ->where('date', $date)
+                            ->count();
+
+        $officerAtSameShift = Shifts::where('user_id', $request->officer_name)
+                                    ->where('date', $storedate)
+                                    ->where('location', $request->location)
+                                    ->count();
+
+        $officerOfficer = Shifts::where('user_id', $request->officer_name)
+                                ->where('date', $storedate)
+                                ->count();
+
+        if ($date->isBefore($todays)) {
+            Alert::error('Error', 'Invalid Date!');
+            return redirect()->back();
+        } elseif($existingShift > 0) {
+            Alert::error('Error', 'Already someone in this location.');
+            return redirect()->back();
+        } elseif($officerAtSameShift > 0) {
+            Alert::error('Error', 'This officer is already posted to this location.');
+            return redirect()->back();
+        } elseif($officerOfficer > 0) {
+            Alert::error('Error', 'This officer is already posted at another location.');
+            return redirect()->back();
+        } else {
+            $user = User::find($request->officer_name);
+                if ($user) {
+                $staffname = $user->name;
+                Shifts::create([
+                    'user_id' => $request->officer_name,
+                    'officer_name' => $staffname,
+                    'location' => $request->location,
+                    'date' => $storedate,
+                ]);
+
+                Alert::success('Success', 'Officer Scheduled Successfully!');
+                return redirect()->back();
+            } else {
+                Alert::error('Error', 'Invalid Officer Selected');
+                return redirect()->back();
+            }
+        }
         
-        $inputDate = Carbon::parse($request -> date);
-        $date = $inputDate -> format('l, jS F, Y');
-
-        shifts::create([
-            'officer_name' => $request -> officer_name,
-            'location' => $request -> location,
-            'date' => $date,
-        ]);
-
-        Alert::success('Success', 'Officer Scheduled Successfully!');
-        return redirect()->back();
     }
+
+
+    public function getSOfficer($officer)
+    {
+        $officer = DB::table('users')->where('id', $officer)->get();
+        return $officer;
+    }
+
 
     /**
      * Display the specified resource.

@@ -9,13 +9,29 @@
         </div>
         <form action="{{route('shifts.store')}}" method="POST">
           @csrf
-        <div class="modal-body">          
+        <div class="modal-body">  
+                      {{-- @if($shiftdatemessage)
+                      <div class="alert alert-primary" role="alert">
+                        {{$shiftdatemessage}}
+                      </div> 
+                      @endif 
+                      @if($datemessage)
+                      <div class="alert alert-primary" role="alert">
+                        {{$datemessage}}
+                      </div>
+                      @endif 
+                      @if($shiftdatelocationmessage)
+                      <div class="alert alert-primary" role="alert">
+                        {{$shiftdatelocationmessage}}
+                      </div>
+                      @endif        --}}
             <div class="mb-3">
                 <label for="officer_name" class="form-label">Officer name</label>    
-                <select name="officer_name" id="" class="form-select">
+                <select name="officer_name" id="officer_name" class="form-select staff">
                     <option value="" disabled selected>select name...</option>
                     @foreach ($users as $user)
-                        <option value="{{$user -> name}}">{{$user -> name}}</option>
+                        <option value="{{$user -> id}}">{{$user -> name}}</option>
+                        
                     @endforeach
                 </select>                
               </div>   
@@ -68,3 +84,33 @@
       </div>
     </div>
   </div>
+
+
+<!-- Role Edit Modal-->
+<div class="modal fade" id="rolemodal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Review Officer</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <form action="{{route('role.update')}}" method="POST">
+          @csrf
+      <div class="modal-body">          
+          <div class="mb-3">   
+            <input type="hidden" id="role_id" name="id">         
+              <label for="name" class="form-label">Action</label>    
+              <select name="role" id="role" class="form-select">
+                  <option value="officer">Approve</option>
+                  <option value="user">Disapprove</option>
+            </select>                 
+          </div>     
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+        <button type="submit" class="btn btn-success">Save</button>
+      </form>
+      </div>
+    </div>
+  </div>
+</div>

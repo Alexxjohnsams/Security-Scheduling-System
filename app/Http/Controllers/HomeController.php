@@ -27,7 +27,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $users = User::whereNotIn('role', ['admin'])->get();
+        $users =  User::whereNotIn('role', ['admin'])->where('role', ['officer'])->get();
         $newusers = DB::table('users')
             ->select('*')
             ->where('role', '=', 'user')

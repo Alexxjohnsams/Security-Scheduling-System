@@ -57,23 +57,21 @@ $(document).ready(function(){
 
     })
 
-    // $('.btnSend').click(function(e) {
-    //     e.preventDefault();
-    //     let id = $(this).attr('data-id');
-    //     $.ajax({
-    //         type: 'GET',
-    //         url: '/cases/edit/' + id,
-    //         success: function(respone) {
-    //             $('#id1').val(response.id);
-    //             $('#status1').val(response.status);
-    //             $('#statement1').val(response.note)
-    //         },
-    //         error: function(response) {
-    //             alert(response.responeText);
-    //         }
-    //     })
-    // })
-
-    
+    $('.btnEditRole').click(function(e) {
+        e.preventDefault();
+        let id = $(this).attr('data-id');
+        $.ajax({
+            type: 'GET',
+            async: false,
+            url: '/officer/edit/' + id,
+            success: function(respone) {
+                $('#role_id').val(respone['id']);
+                $('#role').val(respone['role']);
+            },
+            error: function(response) {
+                alert(response.responeText);
+            }
+        })
+    })
 });
 

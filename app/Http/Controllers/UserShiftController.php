@@ -15,13 +15,13 @@ class UserShiftController extends Controller
      */
     public function index()
     {
-        $users = User::whereNotIn('role', ['admin'])->get();
+        $users =  User::whereNotIn('role', ['admin'])->where('role', ['officer'])->get();
         $locations = Locations::all();
 
         $userSh = auth()->user();
         $userid = $userSh -> id;
-        $shifts = shifts::where('id', $userid)->get();
-        $usershiftcout = shifts::where('id', $userid)->count();
+        $shifts = shifts::where('user_id', $userid)->get();
+        $usershiftcout = shifts::where('user_id', $userid)->count();
         return view('pages.usershift', compact('users', 'locations', 'shifts', 'usershiftcout'));
     }
 

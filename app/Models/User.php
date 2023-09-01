@@ -23,6 +23,9 @@ class User extends Authenticatable
         return $this->role === 'admin';
     }
 
+    protected $table = 'users';
+    protected $primaryKey = 'id';
+
     protected $fillable = [
         'name',
         'email',
@@ -33,7 +36,7 @@ class User extends Authenticatable
 
     public function users()
     {
-        return $this->hasMany(shifts::class);
+        return $this->belongsTo(shifts::class);
     }
 
     /**

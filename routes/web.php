@@ -27,7 +27,7 @@ Route::get('/', function () {
 });
 
 Route::get('/dashboard', function () {
-    $users = User::whereNotIn('role', ['admin'])->get();
+    $users =  User::whereNotIn('role', ['admin'])->where('role', ['officer'])->get();
     
     $officers = User::whereNotIn('role', ['admin'])->count();
     $locationscount = Locations::all()->count();
@@ -59,11 +59,18 @@ Auth::routes();
 Route::get('/user/dashboard', [OfficerDashboardController::class, 'index'])->name('user.dashboard');
 
 Route::get('/officers', [OfficersController::class, 'index'])->name('officers');
+Route::post('/officer/role/update', [OfficersController::class, 'update'])->name('role.update');
+Route::get('/officer/edit/{user}', [OfficersController::class, 'edit']);
+
+Route::middleware(['auth', 'admin'])->post('/officers/update/{officer}', [LocationsController::class, 'update'])->name('locations.store');
 
 Route::get('/shifts', [ShiftsController::class, 'index'])->name('shifts');
 Route::middleware(['auth', 'admin'])->post('/shifts/store', [ShiftsController::class, 'store'])->name('shifts.store');
+Route::get('/allshifts', [ShiftsController::class, 'allindex'])->name('allshifts');
 
 Route::get('/user/usershift', [UserShiftController::class, 'index'])->name('user.usershift');
 
 Route::get('/locations', [LocationsController::class, 'index'])->name('locations');
 Route::middleware(['auth', 'admin'])->post('/locations/store', [LocationsController::class, 'store'])->name('locations.store');
+
+// Route::get('/getofficer/{user}',[ShiftsController::class, 'getSOfficer']);

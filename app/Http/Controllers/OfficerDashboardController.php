@@ -6,6 +6,9 @@ use App\Models\OfficerDashboard;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Locations;
+use App\Models\shifts;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 
 class OfficerDashboardController extends Controller
 {
@@ -14,9 +17,15 @@ class OfficerDashboardController extends Controller
      */
     public function index()
     {
-        $users = User::whereNotIn('role', ['admin'])->get();
+        $users =  User::whereNotIn('role', ['admin'])->where('role', ['officer'])->get();
         $locations = Locations::all();
+
+        $user = Auth::user()->id;            
         return view('pages.dashboard', compact('users', 'locations'));
+
+        // $nextshift = shifts::select('date')->where('id', $user)
+        //             ->where('date', '>', $today)->first();
+        // return view('pages.dashboard', compact('users', 'locations', 'nextshift'));
     }
 
     /**

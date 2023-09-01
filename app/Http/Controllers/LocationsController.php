@@ -14,7 +14,7 @@ class LocationsController extends Controller
      */
     public function index()
     {
-        $users = User::whereNotIn('role', ['admin'])->get();
+        $users =  User::whereNotIn('role', ['admin'])->where('role', ['officer'])->get();
         $locations = Locations::all();
         return view('pages.locations', compact('users', 'locations'));
     }

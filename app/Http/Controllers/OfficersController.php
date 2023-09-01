@@ -6,6 +6,7 @@ use App\Models\Officers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Locations;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class OfficersController extends Controller
 {
@@ -14,9 +15,10 @@ class OfficersController extends Controller
      */
     public function index()
     {
-        $users = User::whereNotIn('role', ['admin'])->get();
+        $users = User::whereNotIn('role', ['admin'])->where('role', ['officer'])->get();
+        $allusers = User::whereNotIn('role', ['admin'])->get();
         $locations = Locations::all();
-        return view('pages.officers', compact('users', 'locations'));
+        return view('pages.officers', compact('users', 'locations', 'allusers'));
     }
 
     /**
@@ -46,17 +48,23 @@ class OfficersController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Officers $officers)
+    public function edit($officer)
     {
-        //
+        return User::find($officer);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Officers $officers)
+    public function update(Request $request)
     {
         //
+        User::find($request->id)->update([
+            'role'=> $request->role,
+        ]);
+        
+        Alert::success('success', 'Officer Status updated successfully');
+        return redirect()->back();
     }
 
     /**
