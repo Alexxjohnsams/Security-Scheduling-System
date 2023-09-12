@@ -16,7 +16,12 @@
                     </div>
                 </div>
             </div> 
-            <div class="card-body table-borderless">                       
+            <div class="card-body table-borderless"> 
+                @if($message) 
+                    <div class="p-3 rounded-3 alert-div text-warning">
+                        {{$message}}
+                    </div>
+                @else                      
                 <table class="table table-striped ">
                     <tr>
                         <th>Name</th>
@@ -36,7 +41,8 @@
                     </tr>
                     @endforeach
                     
-                </table>                        
+                </table> 
+                @endif                       
             </div>                                   
         </div>
     </div>

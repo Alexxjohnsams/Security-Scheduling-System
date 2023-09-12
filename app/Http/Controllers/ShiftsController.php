@@ -29,7 +29,14 @@ class ShiftsController extends Controller
         $daydate = $date -> format('jS F, Y');
 
         $shifts = shifts::where('date', $today)->get();
-        return view('pages.shifts', compact('users', 'locations', 'shifts' , 'day', 'daydate'));
+        if($shifts->isEmpty()) {
+            $message = "There are no officers on post today";
+        } else {
+            $message = "";
+        }
+        
+
+        return view('pages.shifts', compact('users', 'locations', 'shifts' , 'day', 'daydate', 'message'));
     }
 
     public function allindex()
@@ -39,6 +46,16 @@ class ShiftsController extends Controller
         
         $shifts = shifts::all();
         return view('pages.allshifts', compact('users', 'locations', 'shifts'));
+    }
+
+
+    public function pendingindex() 
+    {
+        $users =  User::whereNotIn('role', ['admin'])->where('role', ['officer'])->get();
+        $locations = Locations::all();
+        
+        $shifts = shifts::where('shift_status', ['pending'])->orderBy('formated_date', 'asc')->get();
+        return view('pages.pendingshifts', compact('users', 'locations', 'shifts'));
     }
 
     /**
@@ -96,6 +113,8 @@ class ShiftsController extends Controller
                     'officer_name' => $staffname,
                     'location' => $request->location,
                     'date' => $storedate,
+                    'formated_date' => $request->date,
+                    'shift_status' => 'pending'
                 ]);
 
                 Alert::success('Success', 'Officer Scheduled Successfully!');

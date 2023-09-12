@@ -34,7 +34,6 @@ Route::get('/dashboard', function () {
     $countusers = DB::table('users')
             ->select('*')
             ->where('role', '=', 'user')
-            ->orderBy('created_at', 'desc')
             ->count();
 
     $locations = Locations::all();    
@@ -43,7 +42,13 @@ Route::get('/dashboard', function () {
             ->where('role', '=', 'user')
             ->orderBy('created_at', 'desc')
             ->get();
-    return view('home', compact('newusers', 'users', 'locations', 'officers', 'locationscount', 'countusers'));
+
+    if($newusers->isEmpty()) {
+        $message = "No data";
+    } else {
+        $message = "";
+    }
+    return view('home', compact('newusers', 'users', 'locations', 'officers', 'locationscount', 'countusers', 'message'));
 })->middleware(['auth', 'admin'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
@@ -57,20 +62,23 @@ require __DIR__.'/auth.php';
 Auth::routes();
 
 Route::get('/user/dashboard', [OfficerDashboardController::class, 'index'])->name('user.dashboard');
+    Route::post('/user/report/update', [OfficerDashboardController::class, 'update'])->name('report.update');
+    Route::get('/user/edit/{user}', [OfficerDashboardController::class, 'edit']);
 
 Route::get('/officers', [OfficersController::class, 'index'])->name('officers');
-Route::post('/officer/role/update', [OfficersController::class, 'update'])->name('role.update');
-Route::get('/officer/edit/{user}', [OfficersController::class, 'edit']);
+    Route::post('/officer/role/update', [OfficersController::class, 'update'])->name('role.update');
+    Route::get('/officer/edit/{user}', [OfficersController::class, 'edit']);
 
 Route::middleware(['auth', 'admin'])->post('/officers/update/{officer}', [LocationsController::class, 'update'])->name('locations.store');
 
 Route::get('/shifts', [ShiftsController::class, 'index'])->name('shifts');
-Route::middleware(['auth', 'admin'])->post('/shifts/store', [ShiftsController::class, 'store'])->name('shifts.store');
-Route::get('/allshifts', [ShiftsController::class, 'allindex'])->name('allshifts');
+    Route::middleware(['auth', 'admin'])->post('/shifts/store', [ShiftsController::class, 'store'])->name('shifts.store');
+    Route::get('/allshifts', [ShiftsController::class, 'allindex'])->name('allshifts');
+    Route::get('/pendingshifts', [ShiftsController::class, 'pendingindex'])->name('pendingshifts');
 
 Route::get('/user/usershift', [UserShiftController::class, 'index'])->name('user.usershift');
 
 Route::get('/locations', [LocationsController::class, 'index'])->name('locations');
-Route::middleware(['auth', 'admin'])->post('/locations/store', [LocationsController::class, 'store'])->name('locations.store');
+    Route::middleware(['auth', 'admin'])->post('/locations/store', [LocationsController::class, 'store'])->name('locations.store');
 
 // Route::get('/getofficer/{user}',[ShiftsController::class, 'getSOfficer']);

@@ -18,7 +18,13 @@ class OfficersController extends Controller
         $users = User::whereNotIn('role', ['admin'])->where('role', ['officer'])->get();
         $allusers = User::whereNotIn('role', ['admin'])->get();
         $locations = Locations::all();
-        return view('pages.officers', compact('users', 'locations', 'allusers'));
+
+        if($allusers->isEmpty()) {
+            $message = "No Officer Registered Yet!";
+        } else {
+            $message = "";
+        }
+        return view('pages.officers', compact('users', 'locations', 'allusers', 'message'));
     }
 
     /**

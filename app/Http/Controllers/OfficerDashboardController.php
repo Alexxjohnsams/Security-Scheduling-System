@@ -9,6 +9,8 @@ use App\Models\Locations;
 use App\Models\shifts;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class OfficerDashboardController extends Controller
 {
@@ -20,8 +22,20 @@ class OfficerDashboardController extends Controller
         $users =  User::whereNotIn('role', ['admin'])->where('role', ['officer'])->get();
         $locations = Locations::all();
 
-        $user = Auth::user()->id;            
-        return view('pages.dashboard', compact('users', 'locations'));
+        $userId = Auth::user()->id;
+        $getRole = User::where('role', ['user'])->where('id', $userId)->count();
+        // $getRole = DB::table('User')->select('role')->where('id', '=' , $userId)-get();
+        if($getRole > 0) {
+            $message = "You have not been approved for duty yet!";
+        } else {
+            $message = "";
+        }
+
+        $getpendingShifts = shifts::where('user_id', $userId)->where('shift_status', ['pending'])->orderBy('formated_date', 'asc')->get();
+        
+
+        $Nextshift = shifts::select('date')->where('user_id', $userId)->where('shift_status', ['pending'])->orderBy('formated_date', 'asc')->first();
+        return view('pages.dashboard', compact('users', 'locations', 'message', 'getpendingShifts', 'Nextshift'));
 
         // $nextshift = shifts::select('date')->where('id', $user)
         //             ->where('date', '>', $today)->first();
@@ -55,17 +69,23 @@ class OfficerDashboardController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(OfficerDashboard $officerDashboard)
+    public function edit($shift)
     {
-        //
+        return shifts::find($shift);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, OfficerDashboard $officerDashboard)
+    public function update(Request $request)
     {
         //
+        shifts::find($request->id)->update([
+            'shift_status'=> $request->status,
+        ]);
+        
+        Alert::success('success', 'Report Sent!');
+        return redirect()->back();
     }
 
     /**

@@ -1,3 +1,4 @@
+const { Alert } = require("bootstrap");
 
 $(document).ready(function(){
     
@@ -71,7 +72,24 @@ $(document).ready(function(){
             error: function(response) {
                 alert(response.responeText);
             }
-        })
+        });
+    })
+
+    $('.btnReport').click(function(e) {
+        e.preventDefault();
+        let id = $(this).attr('data-id');
+        $.ajax({
+            type: 'GET',
+            async: false,
+            url: '/user/edit/' + id,
+            success: function(respone) {
+                $('#report_id').val(respone[id]);
+                $('#status').val([shift_status]);
+            },
+            error: function(response) {
+                alert(response.responeText);
+            }
+        });
     })
 });
 

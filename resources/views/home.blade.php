@@ -44,12 +44,16 @@
     <div class="row">
         <div class="container">
             <h1 class="h3 mb-3 pt-3"><strong>Unapproved</strong> Officers</h1>
+            @if($message) 
+            <div class="p-3 rounded-3 alert-div text-warning">
+                {{$message}}
+            </div>
+            @else            
             <div class="row card">
                 <div class="col-12 table-responsive">
-                    <table class="table table-borderless my-0">
+                    <table class="table table-borderless">
                         <tr>
                             <th>S/N</th>
-                            <th>Name</th>
                             <th>Name</th>
                             <th>Email</th>
                             <th>Phone</th>
@@ -75,7 +79,7 @@
                     </table>
                 </div>
             </div>
-        
+        @endif
         </div>
     </div>
 </div>

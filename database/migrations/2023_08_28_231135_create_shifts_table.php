@@ -17,6 +17,8 @@ return new class extends Migration
             $table->string('officer_name');
             $table->string('location');
             $table->string('date');
+            $table->date('formated_date');
+            $table->string('shift_status');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();
         });

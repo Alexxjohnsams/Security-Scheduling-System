@@ -18,6 +18,8 @@ class shifts extends Model
         'officer_name',
         'location',
         'date',
+        'formated_date',
+        'shift_status'
     ];
 
     

@@ -37,22 +37,19 @@
                     </a>
                 </li>
             @endcan
-            
-            @cannot('admin')                
-            
-            <li class="sidebar-item {{ Request::is('user/dashboard') ? 'active' : '' }}">
-                <a class="sidebar-link" href="{{route('user.dashboard')}}">                    
-                  <i class="align-middle" data-feather="sliders"></i> <span class="align-middle">Your Dashboard</span>
-                </a>
-            </li>
-            
-            <li class="sidebar-item {{ Request::is('user/usershift') ? 'active' : '' }}">
-                <a class="sidebar-link" href="{{route('user.usershift')}}">
-                  <i class="align-middle" data-feather="shield"></i> <span class="align-middle">My Shift</span>
-                </a>
-            </li>     
-            @endcannot
-            
+                @cannot('admin')   
+                <li class="sidebar-item {{ Request::is('user/dashboard') ? 'active' : '' }}">
+                    <a class="sidebar-link" href="{{route('user.dashboard')}}">                    
+                    <i class="align-middle" data-feather="sliders"></i> <span class="align-middle">Your Dashboard</span>
+                    </a>
+                </li>
+                
+                <li class="sidebar-item {{ Request::is('user/usershift') ? 'active' : '' }}">
+                    <a class="sidebar-link" href="{{route('user.usershift')}}">
+                    <i class="align-middle" data-feather="shield"></i> <span class="align-middle">My Shift</span>
+                    </a>
+                </li>     
+                @endcannot
         </ul>
     </div>
 </nav>

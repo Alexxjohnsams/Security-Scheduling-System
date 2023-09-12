@@ -16,7 +16,12 @@ class LocationsController extends Controller
     {
         $users =  User::whereNotIn('role', ['admin'])->where('role', ['officer'])->get();
         $locations = Locations::all();
-        return view('pages.locations', compact('users', 'locations'));
+        if($locations->isEmpty()) {
+            $message = "No Location added Yet!";
+        } else {
+            $message = "";
+        }
+        return view('pages.locations', compact('users', 'locations', 'message'));
     }
 
     /**

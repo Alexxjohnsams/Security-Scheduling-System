@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Locations;
 use App\Models\shifts;
+use Carbon\Carbon;
 
 class UserShiftController extends Controller
 {
@@ -20,9 +21,32 @@ class UserShiftController extends Controller
 
         $userSh = auth()->user();
         $userid = $userSh -> id;
-        $shifts = shifts::where('user_id', $userid)->get();
-        $usershiftcout = shifts::where('user_id', $userid)->count();
-        return view('pages.usershift', compact('users', 'locations', 'shifts', 'usershiftcout'));
+        $shifts = shifts::where('user_id', $userid)->where('shift_status', ['completed'])->get();
+        $usershiftcout = shifts::where('user_id', $userid)->where('shift_status', ['completed'])->count();
+
+        $getAbscentCount = shifts::where('user_id', $userid)->where('shift_status', ['absent'])->count();
+
+        $today = Carbon::now()->setTime(0, 0, 0);
+        $tommorow = $today->copy()->addDay();
+
+        // $shiftDate = shifts::select('formated_date')->whereLessThan($today)->get();
+
+        $getRole = User::where('role', ['user'])->where('id', $userid)->count();
+        if($getRole > 0) {
+            $message = "You have no history because you have not been approved for duty!";
+        } else {
+            $message = "";
+        }
+
+        if($shifts->isEmpty()) {
+            $shift_message = "No shift history yet!";
+        } else {
+            $shift_message = "";
+        }
+
+        
+        
+        return view('pages.usershift', compact('users', 'locations', 'shifts', 'usershiftcout', 'message', 'getAbscentCount', 'shift_message'));
     }
 
     /**

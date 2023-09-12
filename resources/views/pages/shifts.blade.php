@@ -29,8 +29,13 @@
                     </div>
                 </div>
             </div> 
-            <div class="card-body table-borderless">                       
-                <table class="table table-striped ">
+            <div class="card-body table-borderless">
+                @if($message)  
+                    <div class="p-3 rounded-3 alert-div text-warning">
+                         {{$message}}
+                    </div>
+                @else                     
+                <table class="table table-striped">
                     <tr>
                         <th>Officer Name</th>
                         <th>Scheduled Location</th>
@@ -50,11 +55,17 @@
                         </td>
                     </tr> 
                     @endforeach                   
-                </table>                        
-            </div>  
-            <div class="card-header">
-                <a class="btn text-success" href="{{route("allshifts")}}">See all shifts <i class="text-success" data-feather="arrow-right"></i></a>
-            </div>                                  
+                </table>  
+                @endif                      
+            </div>
+                <div class="card-footer row justify-between d-flex">
+                    <div class="col">
+                        <a class="btn btn-outline-danger" href="{{route("pendingshifts")}}">Pening Shifts <i class="" data-feather="arrow-right"></i></a>
+                    </div>
+                    <div class="col text-end">
+                        <a class="btn btn-outline-success" href="{{route("allshifts")}}">See all shifts <i class="" data-feather="arrow-right"></i></a>
+                    </div>
+                </div>                            
         </div>
     </div>
 </div>
