@@ -62,8 +62,8 @@ require __DIR__.'/auth.php';
 Auth::routes();
 
 Route::get('/user/dashboard', [OfficerDashboardController::class, 'index'])->name('user.dashboard');
-    Route::post('/user/report/update', [OfficerDashboardController::class, 'update'])->name('report.update');
-    Route::get('/user/edit/{user}', [OfficerDashboardController::class, 'edit']);
+    
+    
 
 Route::get('/officers', [OfficersController::class, 'index'])->name('officers');
     Route::post('/officer/role/update', [OfficersController::class, 'update'])->name('role.update');
@@ -75,6 +75,9 @@ Route::get('/shifts', [ShiftsController::class, 'index'])->name('shifts');
     Route::middleware(['auth', 'admin'])->post('/shifts/store', [ShiftsController::class, 'store'])->name('shifts.store');
     Route::get('/allshifts', [ShiftsController::class, 'allindex'])->name('allshifts');
     Route::get('/pendingshifts', [ShiftsController::class, 'pendingindex'])->name('pendingshifts');
+
+    Route::post('/shifts/report/update', [ShiftsController::class, 'update'])->name('report.update');
+    Route::get('/shifts/edit/{shift}', [ShiftsController::class, 'report']);
 
 Route::get('/user/usershift', [UserShiftController::class, 'index'])->name('user.usershift');
 

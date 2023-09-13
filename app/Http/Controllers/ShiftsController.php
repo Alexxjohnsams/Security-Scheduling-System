@@ -151,12 +151,22 @@ class ShiftsController extends Controller
         //
     }
 
+    public function report($shift)
+    {
+        return shifts::find($shift);
+    }
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, shifts $shifts)
+    public function update(Request $request)
     {
         //
+        shifts::find($request->id)->update([
+            'shift_status'=> $request->status,
+        ]);
+        
+        Alert::success('success', 'Report Sent!');
+        return redirect()->back();
     }
 
     /**

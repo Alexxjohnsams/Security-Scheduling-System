@@ -32,10 +32,19 @@ class OfficerDashboardController extends Controller
         }
 
         $getpendingShifts = shifts::where('user_id', $userId)->where('shift_status', ['pending'])->orderBy('formated_date', 'asc')->get();
-        
+        if($getpendingShifts->isEmpty()) {
+            $pending_message = "No data";
+        } else {
+            $pending_message = "";
+        }
 
         $Nextshift = shifts::select('date')->where('user_id', $userId)->where('shift_status', ['pending'])->orderBy('formated_date', 'asc')->first();
-        return view('pages.dashboard', compact('users', 'locations', 'message', 'getpendingShifts', 'Nextshift'));
+        if($Nextshift=="") {
+            $next_message = "your next shift date will appear here";
+        } else {
+            $next_message = "";
+        }
+        return view('pages.dashboard', compact('users', 'locations', 'message', 'getpendingShifts', 'Nextshift', 'next_message', 'pending_message'));
 
         // $nextshift = shifts::select('date')->where('id', $user)
         //             ->where('date', '>', $today)->first();
@@ -71,7 +80,7 @@ class OfficerDashboardController extends Controller
      */
     public function edit($shift)
     {
-        return shifts::find($shift);
+       
     }
 
     /**
@@ -79,13 +88,7 @@ class OfficerDashboardController extends Controller
      */
     public function update(Request $request)
     {
-        //
-        shifts::find($request->id)->update([
-            'shift_status'=> $request->status,
-        ]);
-        
-        Alert::success('success', 'Report Sent!');
-        return redirect()->back();
+
     }
 
     /**

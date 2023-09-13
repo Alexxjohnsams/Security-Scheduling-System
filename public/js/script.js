@@ -1,5 +1,3 @@
-const { Alert } = require("bootstrap");
-
 $(document).ready(function(){
     
     // $('#btn_info').click(function(e){
@@ -75,16 +73,16 @@ $(document).ready(function(){
         });
     })
 
-    $('.btnReport').click(function(e) {
+    $('.btnReportStatus').click(function(e) {
         e.preventDefault();
         let id = $(this).attr('data-id');
         $.ajax({
             type: 'GET',
             async: false,
-            url: '/user/edit/' + id,
+            url: '/shifts/edit/' + id,
             success: function(respone) {
-                $('#report_id').val(respone[id]);
-                $('#status').val([shift_status]);
+                $('#report_id').val(respone['id']);
+                $('#status').val(respone['shift_status']);
             },
             error: function(response) {
                 alert(response.responeText);
@@ -92,4 +90,3 @@ $(document).ready(function(){
         });
     })
 });
-
