@@ -49,7 +49,7 @@
                             <button class="btn btn-sm btn-outline-success">
                                 <i class="" data-feather="edit-2"></i>
                             </button>
-                            <button class="btn btn-sm btn-outline-danger">
+                            <button class="btn btn-sm btn-outline-danger" data-id="{{$shift -> id}}" data-bs-toggle="modal" data-bs-target="#deleteModal">
                                 <i class="" data-feather="trash"></i>
                             </button>
                         </td>
@@ -70,4 +70,6 @@
     </div>
 </div>
     
+
+@include('pages.modal')
 @endsection
