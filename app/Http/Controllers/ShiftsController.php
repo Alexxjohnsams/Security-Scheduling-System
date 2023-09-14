@@ -61,10 +61,7 @@ class ShiftsController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
-    {
-        
-    }
+   
 
     /**
      * Store a newly created resource in storage.
@@ -135,20 +132,10 @@ class ShiftsController extends Controller
     }
 
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(shifts $shifts)
+    public function edit($shifts)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(shifts $shifts)
-    {
-        //
+        $data=shifts::where('id',$shifts)->first();
+        return $data;
     }
 
     public function report($shift)
@@ -169,11 +156,33 @@ class ShiftsController extends Controller
         return redirect()->back();
     }
 
+    public function updateShift(Request $request)
+    {
+            $id =$request->shift_update_id;
+            $inputDate = Carbon::parse($request->date); 
+            $storedate = $inputDate->format('l, jS F, Y');
+            $existData=shifts::where('officer_name',$request->officer_name)->where('date',$storedate)->where('location',$request->location);
+           if(!$existData){
+            dd($existData);
+            $data=shifts::find($id);
+            $data -> officer_name  = $request->officer_name;
+            $data -> location      = $request->location;
+            $data -> date          = $storedate;
+            $data -> formated_date = $request->date;
+            $data->update();
+            return redirect()->back()->with('succes',"Updated succesfully.");
+           }else{
+            return redirect()->back()->with('error',"This Officer has been schedule this current time and location.");
+           }
+    }
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(shifts $shifts)
+    public function destroy(Request $request)
     {
-        //
+       $id=$request ->shift_del_id;
+       $data=shifts::find($id);
+       $data->delete();
+       return redirect()->back()->with('succes',"Deleted succesfully.");
     }
 }

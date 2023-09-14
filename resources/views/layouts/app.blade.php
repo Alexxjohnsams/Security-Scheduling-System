@@ -19,7 +19,7 @@
     <!-- Scripts -->
     <script src="{{ asset('js/appp.js') }}" defer></script>
     <script src="{{ asset('js/script.js') }}" defer></script>
-
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="{{mix('js/app.js')}}"></script>
 
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
@@ -33,6 +33,7 @@
                 @include('layouts.sidebar')
                 <div class="main">
                     @include('layouts.navbar')
+                    @include('sweetalert::alert')
                     <main class="content py-4">
                         @yield('content')
                     </main>

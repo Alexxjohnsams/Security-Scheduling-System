@@ -1,5 +1,6 @@
 @extends('layouts.app')
 
+   
 @section('content')
 <div class="container">
     <h1 class="h3 mb-3"><strong><i class="text-success" data-feather="shield"></i> Shifts</strong></h1>
@@ -46,10 +47,10 @@
                         <td>{{$shift -> officer_name}}</td>
                         <td>{{$shift -> location}}</td>                        
                         <td>
-                            <button class="btn btn-sm btn-outline-success">
+                            <button class="btn btn-sm btn-outline-success shiftEdit" data-id="{{$shift -> id}}" >
                                 <i class="" data-feather="edit-2"></i>
                             </button>
-                            <button class="btn btn-sm btn-outline-danger">
+                            <button class="btn btn-sm btn-outline-danger shiftDelete"  data-id="{{$shift -> id}}">
                                 <i class="" data-feather="trash"></i>
                             </button>
                         </td>
@@ -60,14 +61,14 @@
             </div>
                 <div class="card-footer row justify-between d-flex">
                     <div class="col">
-                        <a class="btn btn-outline-danger" href="{{route("pendingshifts")}}">Pening Shifts <i class="" data-feather="arrow-right"></i></a>
+                        <a class="btn btn-outline-danger" href="{{route('pendingshifts')}}">Pening Shifts <i class="" data-feather="arrow-right"></i></a>
                     </div>
                     <div class="col text-end">
-                        <a class="btn btn-outline-success" href="{{route("allshifts")}}">See all shifts <i class="" data-feather="arrow-right"></i></a>
+                        <a class="btn btn-outline-success" href="{{route('allshifts')}}">See all shifts <i class="" data-feather="arrow-right"></i></a>
                     </div>
                 </div>                            
         </div>
     </div>
 </div>
-    
+@include('pages.modal')
 @endsection

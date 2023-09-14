@@ -12,7 +12,7 @@
                         <th>Scheduled Location</th>
                         <th>Date</th>
                         <th>Status</th>
-                        <th></th
+                        <th></th>
                     </tr>
                     @foreach($shifts as $shift)
                     <tr>
@@ -32,7 +32,10 @@
                             ?>   
                         </td>                   
                         <td>
-                            <button class="btn btn-sm btn-outline-danger">
+                        <button class="btn btn-sm btn-outline-success shiftEdit" data-id="{{$shift -> id}}" >
+                                <i class="" data-feather="edit-2"></i>
+                            </button>
+                            <button class="btn btn-sm btn-outline-danger shiftDelete" data-id="{{$shift -> id}}">
                                 <i class="" data-feather="trash"></i>
                             </button>
                         </td>
@@ -43,5 +46,5 @@
         </div>
     </div>
 </div>
-    
+@include('pages.modal')
 @endsection
