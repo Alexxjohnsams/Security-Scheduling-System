@@ -79,6 +79,9 @@ Route::get('/shifts', [ShiftsController::class, 'index'])->name('shifts');
     Route::middleware(['auth', 'admin'])->post('/shifts/store', [ShiftsController::class, 'store'])->name('shifts.store');
     Route::get('/allshifts', [ShiftsController::class, 'allindex'])->name('allshifts');
     Route::get('/pendingshifts', [ShiftsController::class, 'pendingindex'])->name('pendingshifts');
+    Route::post('/shift/destroy', [ShiftsController::class, 'destroy'])->name('shifts.destroy');
+    Route::get('/shift/edit/{id}', [ShiftsController::class, 'edit'])->name('shifts.edit');
+    Route::post('/shift/update', [ShiftsController::class, 'updateShift'])->name('shifts.updateShift');
 
     
     Route::get('/viewshifHistory/{shift}', [ShiftsController::class, 'viewhistory'])->name('view');;

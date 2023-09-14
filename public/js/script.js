@@ -1,5 +1,34 @@
-$(document).ready(function(){
-    
+
+    document.addEventListener("DOMContentLoaded", function() {
+      $('.shiftDelete').click(function (e){
+          e.preventDefault();
+          let id = $(this).attr('data-id');
+          $('#shift_del_id').val(id); // Changed 'va' to 'val'
+          $('#deleteShift').modal('show');
+      });
+
+      $('.shiftEdit').on('click touchstart tap',function(e) {
+        e.preventDefault();
+        let id = $(this).attr('data-id');
+        
+        $.ajax({
+            type: 'GET',
+            async: false,
+            url: '/shift/edit/'+id,
+            success: function(response) {
+                alert(officer_name);
+                $('#shift_update_id').val(id);
+                $('#edit_officer_name').val(response.officer_name);
+                $('#edit_shift_location').val(response.location);
+                $('#edit_shift_date').val(response.formated_date);
+            },
+            error: function(response) {
+                alert(response.responseText);
+            }
+        });
+        $('.editShiftModal').modal('show');
+    });
+  
     // $('#btn_info').click(function(e){
     //     e.preventDefault();
     //     $('#info').modal('show');
