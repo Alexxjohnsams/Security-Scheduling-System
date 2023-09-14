@@ -56,17 +56,23 @@ class LocationsController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Locations $locations)
+    public function edit($location)
     {
-        //
+        return Locations::find($location);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Locations $locations)
+    public function update(Request $request)
     {
         //
+        Locations::find($request->location_id)->update([
+            'location_name'=> $request->location_name,
+        ]);
+        
+        Alert::success('success', 'Location updated successfully');
+        return redirect()->back();
     }
 
     /**

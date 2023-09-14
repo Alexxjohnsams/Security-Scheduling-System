@@ -6,20 +6,20 @@ $(document).ready(function(){
     // })
 
     // delete Case
-    $('.btnDeleteCase').click(function (e){
+    $('.btnDeleteOfficer').click(function (e){
         e.preventDefault();
        let id = $(this).attr('data-id');
-        $('#deleteCaseFile').attr('data-id', id);
+        $('#btn_delete').attr('data-id', id);
         // $('#deleteCase').modal('show');
     })
 
-    $('#deleteCaseFile').click(function (e){
+    $('#btn_delete').click(function (e){
         let id = $(this).attr('data-id');
             
         $.ajax({
             type: 'GET',
             async: 'false',
-            url: '/case/delete/'+ id,
+            url: '/officer/delete/'+ id,
             success: function(response) {
                 window.location.reload();
             },
@@ -73,13 +73,31 @@ $(document).ready(function(){
         });
     })
 
+    // edit Location
+    $('.btnEditLocation').click(function(e) {
+        e.preventDefault();
+        let id = $(this).attr('data-id');
+        $.ajax({
+            type: 'GET',
+            async: false,
+            url: '/locations/edit/' + id,
+            success: function(respone) {
+                $('#location_id').val(respone['id']);
+                $('#location_name').val(respone['location_name']);
+            },
+            error: function(response) {
+                alert(response.responeText);
+            }
+        });
+    })
+
     $('.btnReportStatus').click(function(e) {
         e.preventDefault();
         let id = $(this).attr('data-id');
         $.ajax({
             type: 'GET',
             async: false,
-            url: '/shifts/edit/' + id,
+            url: '/shifts/' + id,
             success: function(respone) {
                 $('#report_id').val(respone['id']);
                 $('#status').val(respone['shift_status']);

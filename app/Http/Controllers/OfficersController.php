@@ -6,6 +6,7 @@ use App\Models\Officers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Locations;
+use App\Models\shifts;
 use RealRashid\SweetAlert\Facades\Alert;
 
 class OfficersController extends Controller
@@ -59,6 +60,11 @@ class OfficersController extends Controller
         return User::find($officer);
     }
 
+    public function editstatus($status)
+    {
+        return shifts::find($status);
+    }
+
     /**
      * Update the specified resource in storage.
      */
@@ -76,8 +82,10 @@ class OfficersController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Officers $officers)
+    public function destroy($officers)
     {
-        //
+        User::where('id', $officers)->delete();
+        Alert::success('success', 'Officer deleted successfully');
+        return redirect()->back();
     }
 }

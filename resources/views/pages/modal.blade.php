@@ -146,26 +146,47 @@
   </div>
 </div>
 
-
-
-
 <!-- delete modal --> 
- <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"> 
+ <div class="modal fade" id="deleteOfficerModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"> 
      <div class="modal-dialog" role="document"> 
        <div class="modal-content"> 
          <div class="modal-header"> 
            <h5 class="modal-title" id="myModalLabel">Delete </h5> 
-           <button type="button" class="close btn" data-dismiss="modal" aria-label="Close"> 
-             <span aria-hidden="true">&times;</span> 
-           </button> 
+           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
          </div> 
          <div class="modal-body"> 
            <p>Proceed to delete?</p> 
          </div> 
          <div class="modal-footer"> 
-             <button type="button" id="deleteUserBtn" class="btn btn-danger">Yes</button> 
-             <button type="button" class="btn btn-primary" data-dismiss="modal">No</button>           
+             <button type="button" id="btn_delete" class="btn btn-danger">Yes</button> 
+             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>           
          </div> 
        </div> 
      </div> 
    </div>
+
+   <!-- Edit Location-->
+ <div class="modal fade" id="editLocationModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Edit Location name</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <form action="{{route('locations.update')}}" method="POST">
+        @csrf
+      <div class="modal-body">  
+        <div class="mb-3">
+          <label for="name" class="form-label">Name</label>
+          <input type="hidden" name="location_id" id="location_id">    
+          <input type="text" name="location_name" id="location_name" class="form-control" required>                
+        </div> 
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+        <button type="submit" class="btn btn-success">Save</button>
+      </form>
+      </div>
+    </div>
+  </div>
+</div>

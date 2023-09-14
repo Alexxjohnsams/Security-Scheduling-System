@@ -58,6 +58,28 @@ class ShiftsController extends Controller
         return view('pages.pendingshifts', compact('users', 'locations', 'shifts'));
     }
 
+    public function viewhistory($id)
+    {
+        // $shift = shifts::find($id);
+        $users =  User::whereNotIn('role', ['admin'])->where('role', ['officer'])->get();
+        $locations = Locations::all();
+
+        $shifts = shifts::where('user_id', $id)->orderBy('formated_date', 'asc')->get();
+        // $name = shifts::where('user_id', $id)->get();
+        // $officername = $name -> officer_name;
+        $name = DB::table('users') -> select('*')->where('id', '=', $id) ->first();
+        $officername = $name -> name;
+
+        // $shiftscount = shifts::where('user_id', $id)->orderBy('formated_date', 'asc')->count();
+
+        if($shifts->isEmpty()) {
+            $shiftcountmessage = "No record found";
+        } else {
+            $shiftcountmessage = "";
+        }
+        return view('pages.usershiftshistory', compact('users', 'locations', 'shifts', 'officername', 'shiftcountmessage'));
+    }
+
     /**
      * Show the form for creating a new resource.
      */
@@ -146,15 +168,11 @@ class ShiftsController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(shifts $shifts)
+    public function edit($shifts)
     {
-        //
+        
     }
 
-    public function report($shift)
-    {
-        return shifts::find($shift);
-    }
     /**
      * Update the specified resource in storage.
      */

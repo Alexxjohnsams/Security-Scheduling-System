@@ -39,13 +39,13 @@
                             ?>
                         </td>                          
                         <td>
-                            <button class="btn btn-sm btn-outline-success">
+                            <a href="{{route('view', [$user->id]) }}" class="btn btn-sm btn-outline-success" >
                                 <i class="" data-feather="align-center"></i>
-                            </button>
+                            </a>
                             <button class="btn btn-sm btn-outline-success btnEditRole" data-id="{{$user -> id}}" data-bs-toggle="modal" data-bs-target="#rolemodal">
                                 <i class="" data-feather="edit-2"></i>
                             </button>
-                            <button class="btn btn-sm btn-outline-danger" data-id="{{$user -> id}}" data-toggle="modal" data-target="#deleteModal">
+                            <button class="btn btn-sm btn-outline-danger btnDeleteOfficer" data-id="{{$user -> id}}" data-bs-toggle="modal" data-bs-target="#deleteOfficerModal">
                                 <i class="" data-feather="trash"></i>
                             </button>
                         </td>

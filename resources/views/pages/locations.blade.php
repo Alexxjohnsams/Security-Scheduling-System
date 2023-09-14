@@ -31,7 +31,7 @@
                     <tr>                        
                         <td>{{$location -> location_name}}</td>                        
                         <td>
-                            <button class="btn btn-sm btn-outline-success">
+                            <button class="btn btn-sm btn-outline-success btnEditLocation" data-id="{{$location -> id}}" data-bs-toggle="modal" data-bs-target="#editLocationModal">
                                 <i class="" data-feather="edit-2"></i>
                             </button>
                             <button class="btn btn-sm btn-outline-danger" data-id="{{$location -> id}}" data-bs-toggle="modal" data-bs-target="#deleteModal">
