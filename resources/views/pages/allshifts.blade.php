@@ -32,7 +32,7 @@
                             ?>   
                         </td>                   
                         <td>
-                            <button class="btn btn-sm btn-outline-danger">
+                            <button class="btn btn-sm btn-outline-danger" data-id="{{$shift -> id}}" data-bs-toggle="modal" data-bs-target="#deleteModal">
                                 <i class="" data-feather="trash"></i>
                             </button>
                         </td>
@@ -43,5 +43,6 @@
         </div>
     </div>
 </div>
-    
+
+@include('pages.modal')
 @endsection
