@@ -35,5 +35,5 @@
 </div>
     
 
-@inlude('pages.modal')
+@include('pages.modal')
 @endsection
