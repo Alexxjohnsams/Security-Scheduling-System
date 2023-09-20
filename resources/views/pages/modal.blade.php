@@ -119,9 +119,8 @@
             <input type="hidden" id="shift_update_id" name="shift_update_id">
               <label for="officer_name" class="form-label">Officer name</label>    
               <select name="officer_name" id="edit_officer_name" class="form-select staff">
-                  <option value="" disabled selected>select name...</option>
                   @foreach ($users as $user)
-                      <option value="{{$user -> name}}">{{$user -> name}}</option>
+                      <option value="{{$user -> id}}">{{$user -> name}}</option>
                   @endforeach
               </select>                
             </div>   
@@ -178,7 +177,7 @@
   </div>
 </div>
 
-<!-- delete modal --> 
+<!-- delete officer modal --> 
  <div class="modal fade" id="deleteOfficerModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"> 
      <div class="modal-dialog" role="document"> 
        <div class="modal-content"> 
@@ -196,6 +195,25 @@
        </div> 
      </div> 
    </div>
+
+   <!-- delete location modal --> 
+ <div class="modal fade" id="deleteLocationModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"> 
+  <div class="modal-dialog" role="document"> 
+    <div class="modal-content"> 
+      <div class="modal-header"> 
+        <h5 class="modal-title" id="myModalLabel">Delete </h5> 
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div> 
+      <div class="modal-body"> 
+        <p>Proceed to delete?</p> 
+      </div> 
+      <div class="modal-footer"> 
+          <button type="submit" id="btn_delete_location" class="btn btn-danger">Yes</button> 
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>           
+      </div> 
+    </div> 
+  </div> 
+</div>
 
    <!-- Edit Location-->
  <div class="modal fade" id="editLocationModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">

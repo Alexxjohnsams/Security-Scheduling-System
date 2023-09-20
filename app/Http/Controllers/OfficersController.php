@@ -79,6 +79,17 @@ class OfficersController extends Controller
         return redirect()->back();
     }
 
+    public function Report(Request $request)
+    {
+        //
+        shifts::find($request->id)->update([
+            'shift_status'=> $request->status,
+        ]);
+        
+        Alert::success('success', 'Officer Status updated successfully');
+        return redirect()->back();
+    }
+
     /**
      * Remove the specified resource from storage.
      */

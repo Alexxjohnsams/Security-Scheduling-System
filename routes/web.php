@@ -70,7 +70,7 @@ Route::get('/officers', [OfficersController::class, 'index'])->name('officers');
     Route::get('/officer/edit/{user}', [OfficersController::class, 'edit']);
     Route::get('/officer/delete/{user}', [OfficersController::class, 'destroy']);
 
-    Route::post('/shifts/report/update', [OfficersController::class, 'update'])->name('report.update');
+    Route::post('/shifts/report/update', [OfficersController::class, 'Report'])->name('report.update');
     Route::get('/shifts/{shift}', [OfficersController::class, 'editstatus']);
 
 Route::middleware(['auth', 'admin'])->post('/officers/update/{officer}', [LocationsController::class, 'update'])->name('locations.store');
@@ -91,4 +91,5 @@ Route::get('/user/usershift', [UserShiftController::class, 'index'])->name('user
 Route::get('/locations', [LocationsController::class, 'index'])->name('locations');
     Route::middleware(['auth', 'admin'])->post('/locations/store', [LocationsController::class, 'store'])->name('locations.store');
     Route::middleware(['auth', 'admin'])->get('/locations/edit/{location}', [LocationsController::class, 'edit']);
+    Route::middleware(['auth', 'admin'])->get('/locations/delete/{location}', [LocationsController::class, 'destroy']);
     Route::middleware(['auth', 'admin'])->post('/locations/update', [LocationsController::class, 'update'])->name('locations.update');

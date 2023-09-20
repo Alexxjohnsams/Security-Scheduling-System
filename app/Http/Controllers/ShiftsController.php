@@ -176,22 +176,81 @@ class ShiftsController extends Controller
 
     public function updateShift(Request $request)
     {
-            $id =$request->shift_update_id;
-            $inputDate = Carbon::parse($request->date); 
-            $storedate = $inputDate->format('l, jS F, Y');
-            $existData=shifts::where('officer_name',$request->officer_name)->where('date',$storedate)->where('location',$request->location);
-           if(!$existData){
-            dd($existData);
-            $data=shifts::find($id);
-            $data -> officer_name  = $request->officer_name;
-            $data -> location      = $request->location;
-            $data -> date          = $storedate;
-            $data -> formated_date = $request->date;
-            $data->update();
-            return redirect()->back()->with('succes',"Updated succesfully.");
-           }else{
-            return redirect()->back()->with('error',"This Officer has been schedule this current time and location.");
-           }
+        //     $id =$request->shift_update_id;
+        //     $inputDate = Carbon::parse($request->date); 
+        //     $storedate = $inputDate->format('l, jS F, Y');
+        //     $existData=shifts::where('officer_name',$request->officer_name)->where('date',$storedate)->where('location',$request->location);
+        //     if(!$existData){
+        //     // dd($existData);
+        //     $data=shifts::find($id);
+        //     $data -> officer_name  = $request->officer_name;
+        //     $data -> location      = $request->location;
+        //     $data -> date          = $storedate;
+        //     $data -> formated_date = $request->date;
+        //     $data->update();
+
+        //     Alert::success('success', 'Updated Successfully!');
+        //     return redirect()->back();
+        //    } else {
+        //     Alert::error('error', 'Error!');
+        //     return redirect()->back();
+        //    }
+
+        $inputDate = Carbon::parse($request->date); 
+        $nowdate = Carbon::now();
+
+        $user_id = User::select('id')->where('name', $request->officer_name)->first();
+
+        $date = $inputDate->setTime(0, 0, 0);
+        $todays = $nowdate->setTime(0, 0, 0);
+
+        $storedate = $inputDate->format('l, jS F, Y');
+
+        $existingShift = Shifts::where('location', $request->location)
+                            ->where('date', $date)
+                            ->count();
+
+        $officerAtSameShift = Shifts::where('user_id', $user_id)
+                                    ->where('date', $storedate)
+                                    ->where('location', $request->location)
+                                    ->count();
+
+        $officerOfficer = Shifts::where('user_id', $user_id)
+                                ->where('date', $storedate)
+                                ->count();
+
+        if ($date->isBefore($todays)) {
+            Alert::error('Error', 'Invalid Date!');
+            return redirect()->back();
+        } elseif($existingShift > 0) {
+            Alert::error('Error', 'Already someone in this location.');
+            return redirect()->back();
+        } elseif($officerAtSameShift > 0) {
+            Alert::error('Error', 'This officer is already posted to this location.');
+            return redirect()->back();
+        } elseif($officerOfficer > 0) {
+            Alert::error('Error', 'This officer is already posted at another location.');
+            return redirect()->back();
+        } else {
+            $user = User::find($user_id);
+                if ($user) {
+                $staffname = $user->name;
+                Shifts::find($request->shift_update_id)->update([
+                    'user_id' => $user_id,
+                    'officer_name' => $staffname,
+                    'location' => $request->location,
+                    'date' => $storedate,
+                    'formated_date' => $request->date,
+                    'shift_status' => 'pending'
+                ]);
+
+                Alert::success('Success', 'Schedule updated Successfully!');
+                return redirect()->back();
+            } else {
+                Alert::error('Error', 'Invalid Officer Selected');
+                return redirect()->back();
+            }
+        }
     }
     /**
      * Remove the specified resource from storage.

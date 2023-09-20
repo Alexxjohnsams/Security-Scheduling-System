@@ -25,19 +25,22 @@
                                 if ($status === 'pending') {
                                     echo "<span class='badge rounded-pill bg-warning text-dark'>pending</span>";
                                 } elseif ($status === 'completed') {
-                                    echo "<span class='badge rounded-pill bg-success text-dark'>completed</span>";
+                                    echo "<span class='badge rounded-pill bg-success'>completed</span>";
                                 } else {
                                     echo "<span class='badge rounded-pill bg-danger'>absent</span>";
                                 }
                             ?>   
                         </td>                   
-                        <td>
-                        <button class="btn btn-sm btn-outline-success shiftEdit" data-id="{{$shift -> id}}" >
-                                <i class="" data-feather="edit-2"></i>
-                            </button>
-                            <button class="btn btn-sm btn-outline-danger shiftDelete" data-id="{{$shift -> id}}">
-                                <i class="" data-feather="trash"></i>
-                            </button>
+                        <td class="text-end">
+                            <?php
+                            $statuss = $shift -> shift_status;
+                            ?>
+                            @if ($statuss == 'pending')
+                                  <button class='btn btn-sm btn-outline-success shiftEdit' data-id='{{$shift -> id}}'> <i data-feather='edit-2'></i> </button>
+                                  <button class='btn btn-sm btn-outline-danger shiftDelete ml-1' data-id='{{$shift -> id}}'> <i data-feather='trash'></i> </button>
+                             @else 
+                                  <button class='btn btn-sm btn-outline-danger shiftDelete' data-id='{{$shift -> id}}'> <i data-feather='trash'></i> </button>
+                            @endif
                         </td>
                     </tr> 
                     @endforeach                   

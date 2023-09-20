@@ -16,7 +16,7 @@
                 </div>        
                 <div class="col-sm-6 mt-0">
                     <h1 class="mt-1 mb-sm-3 h5"> Missed shifts </h1> 
-                    <h1 class="mt-1 mb-3 h3"> You have missed <strong class="text-danger"> {{$getAbscentCount}} </strong> shifts so far </h1> 
+                    <h1 class="mt-1 mb-3 h3"> You have missed <strong class="text-danger"> {{$getAbscentCount}} </strong> so far </h1> 
                 </div>                                           
             </div>                                   
         </div>

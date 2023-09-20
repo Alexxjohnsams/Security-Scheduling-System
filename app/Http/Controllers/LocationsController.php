@@ -78,8 +78,10 @@ class LocationsController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Locations $locations)
+    public function destroy($location)
     {
-        //
+        Locations::where('id', $location)->delete();
+        Alert::success('success', 'Location deleted successfully');
+        return redirect()->back();
     }
 }

@@ -34,7 +34,7 @@
                             <button class="btn btn-sm btn-outline-success btnEditLocation" data-id="{{$location -> id}}" data-bs-toggle="modal" data-bs-target="#editLocationModal">
                                 <i class="" data-feather="edit-2"></i>
                             </button>
-                            <button class="btn btn-sm btn-outline-danger" data-id="{{$location -> id}}" data-bs-toggle="modal" data-bs-target="#deleteModal">
+                            <button class="btn btn-sm btn-outline-danger btnDeleteLocation" data-id="{{$location -> id}}" data-bs-toggle="modal" data-bs-target="#deleteLocationModal">
                                 <i class="" data-feather="trash"></i>
                             </button>
                         </td>                        

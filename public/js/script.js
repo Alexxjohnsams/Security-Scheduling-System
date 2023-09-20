@@ -16,14 +16,14 @@
             async: false,
             url: '/shift/edit/'+id,
             success: function(response) {
-                alert(officer_name);
+                // alert(officer_name);
                 $('#shift_update_id').val(id);
                 $('#edit_officer_name').val(response.officer_name);
                 $('#edit_shift_location').val(response.location);
                 $('#edit_shift_date').val(response.formated_date);
             },
             error: function(response) {
-                alert(response.responseText);
+                // alert(response.responseText);
             }
         });
         $('.editShiftModal').modal('show');
@@ -34,7 +34,7 @@
     //     $('#info').modal('show');
     // })
 
-    // delete Case
+    // delete officer Case
     $('.btnDeleteOfficer').click(function (e){
         e.preventDefault();
        let id = $(this).attr('data-id');
@@ -49,6 +49,29 @@
             type: 'GET',
             async: 'false',
             url: '/officer/delete/'+ id,
+            success: function(response) {
+                window.location.reload();
+            },
+            error: function(response) {
+                alert(response.responeText);
+            }
+        });
+    })
+
+    $('.btnDeleteLocation').click(function (e){
+        e.preventDefault();
+       let id = $(this).attr('data-id');
+        $('#btn_delete_location').attr('data-id', id);
+        // $('#deleteCase').modal('show');
+    })
+
+    $('#btn_delete_location').click(function (e){
+        let id = $(this).attr('data-id');
+            
+        $.ajax({
+            type: 'GET',
+            async: 'false',
+            url: '/locations/delete/'+ id,
             success: function(response) {
                 window.location.reload();
             },

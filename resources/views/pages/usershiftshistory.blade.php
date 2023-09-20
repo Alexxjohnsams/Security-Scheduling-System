@@ -16,7 +16,6 @@
                         <th>Scheduled Location</th>
                         <th>Date</th>
                         <th>Status</th>
-                        <th></th
                     </tr>
                     @foreach($shifts as $shift)
                     <tr>
@@ -33,12 +32,7 @@
                                     echo "<span class='badge rounded-pill bg-danger'>absent</span>";
                                 }
                             ?>   
-                        </td>                   
-                        <td>
-                            <button class="btn btn-sm btn-outline-danger" data-id="{{$shift -> id}}" data-bs-toggle="modal" data-bs-target="#deleteModal">
-                                <i class="" data-feather="trash"></i>
-                            </button>
-                        </td>
+                        </td>  
                     </tr> 
                     @endforeach                   
                 </table>   

@@ -12,9 +12,9 @@
             <div class="mb-3">   
               <input type="text" id="report_id" name="id">         
                 <label for="name" class="form-label">Description</label>    
-                <select name="status" id="status" class="form-select">
+                <select name="status" id="staff_status" class="form-select">
                     <option value="completed">Completed</option>
-                    <option value="absent">Was Absent</option>
+                    <option value="absent">Absent</option>
               </select>                 
             </div>     
         </div>
